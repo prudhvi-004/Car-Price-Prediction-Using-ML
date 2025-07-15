@@ -5,11 +5,11 @@ import numpy as np
 import pickle
 
 # ✅ Load the trained model
-with open('C:/Users/prudh/OneDrive/Desktop/Machine Learning/Projects/Car Price Prediction/car_price_model.sav', 'rb') as model_file:
+with open('car_price_model.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
 # ✅ Load the fitted scaler
-with open('C:/Users/prudh/OneDrive/Desktop/Machine Learning/Projects/Car Price Prediction/car_price_scaler.pkl', 'rb') as scaler_file:
+with open('car_price_scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
 
 st.set_page_config(page_title="Car Price Predictor", layout="centered")
