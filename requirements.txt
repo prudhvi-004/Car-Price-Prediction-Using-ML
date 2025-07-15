@@ -1,4 +1,6 @@
 streamlit
+gzip
+pickle
 xgboost
 numpy>=1.26.2,<2.0
 scikit-learn
