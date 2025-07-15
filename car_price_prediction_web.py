@@ -5,7 +5,7 @@ import numpy as np
 import pickle
 
 # ✅ Load the trained model
-with open('car_price_model.pkl', 'rb') as model_file:
+with open('car_price_model.pkl.gz', 'rb') as model_file:
     model = pickle.load(model_file)
 
 # ✅ Load the fitted scaler
