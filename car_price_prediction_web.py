@@ -3,15 +3,16 @@
 import streamlit as st
 import numpy as np
 import pickle
+import gzip 
 
-# ✅ Load the trained model
-with open('car_price_model.pkl.gz', 'rb') as model_file:
+with gzip.open('car_price_model.pkl.gz', 'rb') as model_file:
     model = pickle.load(model_file)
 
-# ✅ Load the fitted scaler
+
 with open('car_price_scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
 
+# UI setup
 st.set_page_config(page_title="Car Price Predictor", layout="centered")
 st.title("🚗 Car Price Prediction App")
 st.markdown("Enter the car's features below to estimate its selling price.")
@@ -19,6 +20,7 @@ st.markdown("Enter the car's features below to estimate its selling price.")
 # Input fields
 year = st.number_input("Year of Purchase", min_value=1990, max_value=2025, step=1)
 km_driven = st.number_input("Kilometers Driven", min_value=0, step=1000)
+
 fuel_type = st.selectbox("Fuel Type", ['Petrol', 'Diesel', 'CNG', 'LPG', 'Electric'])
 fuel_mapping = {'Petrol': 0, 'Diesel': 1, 'CNG': 2, 'LPG': 3, 'Electric': 4}
 fuel_type_encoded = fuel_mapping[fuel_type]
@@ -38,8 +40,10 @@ seats = st.slider("Number of Seats", 2, 10, 5)
 if st.button("Predict Price"):
     input_data = np.array([[year, km_driven, fuel_type_encoded, seller_encoded,
                             trans_encoded, mileage, engine, max_power, seats]])
-    
+
+    # Apply scaler
     input_scaled = scaler.transform(input_data)
+
+    # Make prediction
     prediction = model.predict(input_scaled)
-    
     st.success(f"💰 Estimated Selling Price: ₹{prediction[0]:,.2f}")
